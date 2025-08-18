@@ -7,7 +7,7 @@ import org.iclass.spring_4restapi.dto.ProductDto;
 
 @Mapper
 public interface ProductMapper {
-    List<ProductDto> selectByPk(String customerId);
+    List<ProductDto> selectByPk(String pcode);
 
     List<ProductDto> selectAll();
 

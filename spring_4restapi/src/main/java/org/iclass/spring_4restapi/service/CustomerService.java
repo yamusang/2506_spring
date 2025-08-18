@@ -34,6 +34,7 @@ public class CustomerService {
 
     public int update(CustomerDto dto) {
         return mapper.update(dto);
+        //앞으로 메소드 이름은 특별한 경우 제외하고 mapper 메소드 이름으로 하겠습니다.
     }
 
     public int delete(String customerId) {

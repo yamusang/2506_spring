@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring5webmvcApplication",
+            "request": "launch",
+            "mainClass": "Spring5webmvcApplication",
+            "projectName": "spring_5webmvc"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Spring4RestapiApplication<spring_4restapi>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "org.iclass.spring_4restapi.Spring4RestapiApplication",
+            "projectName": "spring_4restapi",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Spring5webmvcApplication<spring_5webmvc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "org.iclass.spring_5webmvc.Spring5webmvcApplication",
+            "projectName": "spring_5webmvc",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

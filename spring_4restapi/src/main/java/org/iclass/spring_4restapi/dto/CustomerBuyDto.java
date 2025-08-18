@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class CustomerBuyDto {
+    
     private final String pcode;
     private final String pname;
     private final Integer price;

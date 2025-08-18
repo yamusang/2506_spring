@@ -10,10 +10,10 @@
         SELECT * FROM tbl_product
     </select>
     <select id="selectByPk" parameterType="String" resultType="ProductDto">
-        SELECT * FROM tbl_product WHERE product_id=#{productId}
+        SELECT * FROM tbl_product WHERE pcode=#{pcode}
     </select>
     <insert id="insert" parameterType="ProductDto">
-        INSERT INTO tbl_product VALUES (#{pcode},#{category},#{pname,jdbcType=VARCHAR},#{price})
+        INSERT INTO tbl_product(pcode,category,pname,price) VALUES (#{pcode,jdbcType=VARCHAR},#{category,jdbcType=VARCHAR},#{pname,jdbcType=VARCHAR},#{price,jdbcType=NUMERIC})
         <!-- category 컬럼은 null 허용. 널 값 처리를 위해서 jdbcType = VARCHAR(NUMBERIC)옵션 추가 -->
     </insert>
     <update id="update" parameterType="ProductDto">

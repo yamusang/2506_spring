@@ -1,5 +1,6 @@
 package org.iclass.spring_4restapi.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,17 +8,18 @@ import org.iclass.spring_4restapi.dto.CustomerDto;
 import org.iclass.spring_4restapi.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Slf4j
 
@@ -41,7 +43,17 @@ public class CustomerRestController {
     }
 
     @PostMapping("/api/customers")
-    public ResponseEntity<?> save(@RequestBody CustomerDto dto) {
+    public ResponseEntity<?> save(@Valid @RequestBody CustomerDto dto, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) { // 유효성 검사 오류를 담는 객체 bindingResult. 오류가 생기면 hasErrors()가 '참'
+            Map<String, String> errors = new HashMap<>(); // 유효성 오류 내용 저장 객체
+            bindingResult.getFieldErrors().forEach(err -> {
+                // bindingResult.getFieldErrors() : 모든 필드 오류 목록 가져오기
+                errors.put(err.getField(), err.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errors);
+
+        }
         // insert는 db에서 무결성 위반 등 오류 발생 가능성 있음.
         // @RequestBody : 요청의 본문 json 문자열을 자바 CustomerDto 타입 객체로 변환
         // ㄴ 여러개의 값을 dto 타입으로 받을 때 필요
@@ -55,7 +67,15 @@ public class CustomerRestController {
     }
 
     @PutMapping("/api/customers/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, CustomerDto dto) {
+    public ResponseEntity<?> update(@PathVariable String id, @Valid @RequestBody CustomerDto dto,
+            BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(err -> {
+                errors.put(err.getField(), err.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errors);
+        }
         try {
             return ResponseEntity.ok().body(Map.of("success", service.update(dto)));
         } catch (Exception e) {
@@ -64,11 +84,14 @@ public class CustomerRestController {
         }
     }
 
-    @DeleteMapping("/api/customers")
-    public ResponseEntity<?> delete(@RequestHeader String customerId) {
+    @DeleteMapping("/api/customers/{id}")
+    public ResponseEntity<?> delete(@PathVariable String customerId) {
         try {
             int result = service.delete(customerId);
-            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("success", result));
+            if (result == 0) {
+                throw new IllegalArgumentException("id: " + customerId + "존재하지 않습니다.");
+            }
+            return ResponseEntity.ok().body(Map.of("success", result));
         } catch (Exception e) {
             log.info("update 예외 : {}", e.getMessage());
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
