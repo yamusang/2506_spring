@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/" method="POST">
+      <input type="text" name="userId" id="userIdInput" placeholder="작성자" />
+      <br />
+      <input type="hidden" name="writer" id="writerInput" />
+      <input type="text" name="passWord" placeholder="비밀번호" />
+      <br />
+      <input type="text" name="title" placeholder="제목" />
+      <br />
+      <textarea
+        name="content"
+        placeholder="내용"
+        rows="10"
+        cols="50"
+      ></textarea>
+      <button type="submit">저장</button>
+    </form>
+    <script>
+      // id가 'userIdInput'인 요소를 가져옴
+      const userIdInput = document.getElementById("userIdInput");
+      // id가 'writerInput'인 요소를 가져옴
+      const writerInput = document.getElementById("writerInput");
+
+      // 'userIdInput'에 무언가 입력될 때마다 함수를 실행
+      userIdInput.addEventListener("input", function () {
+        // 'writerInput'의 값을 'userIdInput'의 값과 동일하게 설정
+        writerInput.value = this.value;
+      });
+    </script>
+  </body>
+</html>

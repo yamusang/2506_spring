@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/table.css" />
+  </head>
+  <body>
+    <div>
+      <table th:if="${cList != null}">
+        <tr>
+          <th>인덱스</th>
+          <th>작성자</th>
+          <th>제목</th>
+          <th>내용</th>
+          <th>읽은 수</th>
+          <th>쓴날짜</th>
+          <th>IP</th>
+          <th>댓글 수</th>
+        </tr>
+        <tr th:each="communityDto : ${cList}">
+          <td th:text="${communityDto.idx}"></td>
+          <td th:text="${communityDto.writer}"></td>
+          <td th:text="${communityDto.title}"></td>
+          <td th:text="${communityDto.content}"></td>
+          <td th:text="${communityDto.readCount}"></td>
+          <td th:text="${communityDto.createDat}"></td>
+          <td th:text="${communityDto.ip}"></td>
+          <td th:text="${communityDto.commentCount}"></td>
+        </tr>
+      </table>
+      <button onclick="location.href">수정하기</button>
+      <form th:action="@{(idx=${communityDto.idx})}" method="DELETE">
+        <button>삭제하기</button>
+      </form>
+    </div>
+  </body>
+</html>

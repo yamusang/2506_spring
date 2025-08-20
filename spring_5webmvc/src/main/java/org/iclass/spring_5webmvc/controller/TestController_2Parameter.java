@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TestController_2Parameter {
 
     @GetMapping("/list")
-    public String list(String name, @RequestParam(required = false) int age) {
+    public String list(String name, @RequestParam(defaultValue = "0") int age) {
         log.info("name : {}, age : {}", name, age);
         return "list";
     }

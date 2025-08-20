@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="org.iclass.myboard.mapper.CommunityMapper">
+        <select id="selectAll" resultType="CommunityDto">
+            SELECT * FROM COMMUNITY ORDER BY idx desc
+        </select>
+        <select id="selectByPk" parameterType="int" resultType="CommunityDto">
+            SELECT * FROM COMMUNITY WHERE idx = #{idx}
+        </select>
+        <insert id="insertCommunity" parameterType="CommunityDto">
+            INSERT INTO COMMUNITY (idx,writer,title,content)
+            VALUES (community_idx_seq.nextval, #{writer}, #{title},#{content})
+        </insert>
+        <delete id="deleteCommunity" parameterType="int">
+            DELETE FROM COMMUNITY WHERE IDX = #{idx} 
+        </delete>
+    </mapper>

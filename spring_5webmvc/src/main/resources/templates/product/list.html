@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/table.css" />
+    <link rel="stylesheet" href="/css/nav.css" />
+  </head>
+  <body>
+    <ul id="nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/customer/cuslist">customers</a></li>
+    </ul>
+    <div>
+      <h3>상품 검색</h3>
+      <form action="list" method="POST">
+        <input
+          type="text"
+          name="keyword"
+          placeholder="상품 검색어 입력하세요."
+          th:value="${keyword}"
+        />
+        <button type="submit">검색</button>
+      </form>
+    </div>
+    <table th:if="${pList != null}">
+      <!--참고로 else 역할의 th:unless 사용-->
+      <tr>
+        <th>pcode</th>
+        <th>category</th>
+        <th>pname</th>
+        <th>price</th>
+      </tr>
+      <tr th:each="productDto : ${pList}">
+        <td th:text="${productDto.pcode}"></td>
+        <td th:text="${productDto.category}"></td>
+        <td th:text="${productDto.pname}"></td>
+        <td th:text="${#numbers.formatCurrency(productDto.price)}"></td>
+      </tr>
+    </table>
+    <hr />
+    <h2>모델 애트리뷰트 연습</h2>
+    
+    <div>
+      사용자 입력 요청 -- (입력 : 파라미터) -- 컨트롤러 -- (출력:애트리뷰트)--
+      View(타임리프 html) -- 사용자 응답👉여기서 입력값 파라미터(keyword)가
+      컨트롤러에서 처리된 후에 다시 출력값 애트리뷰트(keyword)로 활용될 수
+      있습니다.👉이런 경우 @ModelAttribute로 구현할 수 있습니다. 예제 보기 :
+      <a href="search">클릭(1)!!-오류:page 파라미터❌</a>
+      <a href="search?keyword=라면&page=99">클릭(2)!!</a>
+      <br />int page로 파라미터 선언하면 page가 null일때 오류
+      생깁니다.해결방법은 String page로 선언.
+    </div>
+    <h2>DTO 타입의 파라미터 테스트</h2>
+    <div>
+      <a href="search2?pcode=ABC&pname=라면&price=200"
+        >search2?pcode=ABC&pname=라면&price=200</a
+      >
+    </div>
+  </body>
+</html>
