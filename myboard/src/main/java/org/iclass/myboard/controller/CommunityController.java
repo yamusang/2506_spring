@@ -27,7 +27,7 @@ public class CommunityController {
         return "index";
     }
 
-    @GetMapping("/content")
+    @GetMapping("/content/{idx}")
     public String searchContent(@RequestParam int idx, Model model) {
         model.addAttribute("cList", communityMapper.selectByPk(idx));
         return "content";
@@ -49,11 +49,11 @@ public class CommunityController {
         return "index";
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/content")
     public String deleteCommunity(@RequestParam int idx, Model model) {
         communityMapper.deleteCommunity(idx);
         model.addAttribute("cList", communityMapper.selectAll());
-        return "index";
+        return "content";
     }
 
 }

@@ -31,8 +31,9 @@
         </tr>
       </table>
       <button onclick="location.href">수정하기</button>
-      <form th:action="@{(idx=${communityDto.idx})}" method="DELETE">
-        <button>삭제하기</button>
+      <form th:action="@{/content/(idx=${communityDto.idx})}" method="POST">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit">삭제하기</button>
       </form>
     </div>
   </body>
